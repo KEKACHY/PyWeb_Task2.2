@@ -1,7 +1,13 @@
 ---
 title: "О сайте"
 description: "Информация о проекте"
+author: "KEKACHY"
 ---
 
-# О сайте
-Этот сайт создан с использованием кастомной темы, PostCSS и GitHub Actions.
+# О проекте
+
+Этот сайт демонстрирует:
+- собственную тему (header, footer);
+- сборку статики (CSS/JS) и минификацию;
+- рендер Markdown → HTML через Jinja2;
+- CI/CD — GitHub Actions + deploy → GitHub Pages.
