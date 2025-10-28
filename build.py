@@ -30,7 +30,6 @@ def ensure_build_dirs():
     (BUILD / "assets" / "js").mkdir(parents=True, exist_ok=True)
 
 def copy_assets():
-    # copy css/js file(s) for post-processing step; these will be overwritten by npm build artifacts
     dst_assets = BUILD / "assets"
     if dst_assets.exists():
         shutil.rmtree(dst_assets)
@@ -44,21 +43,25 @@ def render_pages():
         return
     for mdfile in files:
         post = frontmatter.load(mdfile)
-        html_body = markdown.markdown(post.content, extensions=['fenced_code','tables','toc','codehilite'])
+        # 🔹 убрана генерация id для заголовков (toc) — чтобы html-validate не ругался
+        html_body = markdown.markdown(
+            post.content,
+            extensions=[
+                'fenced_code',
+                'tables',
+                'codehilite'
+            ]
+        )
         if TYPOGRAPHY:
-            # smartypants converts quotes/dashes etc.
             html_body = smartypants.smartypants(html_body)
         meta = post.metadata or {}
-        # site-level defaults:
         site_meta = {
             "title": meta.get("site_title", None) or "Мой сайт",
             "author": meta.get("author", None)
         }
         now = datetime.utcnow()
         rendered = template.render(content=html_body, meta=meta, site=site_meta, now=now)
-        # output filename
-        name = mdfile.stem
-        out_path = BUILD / f"{name}.html"
+        out_path = BUILD / f"{mdfile.stem}.html"
         out_path.write_text(rendered, encoding="utf-8")
         print(f"Rendered {mdfile.name} -> {out_path}")
 
