@@ -42,7 +42,11 @@ jobs:
 
       # 6. Сборка CSS, JS и минификация HTML
       - name: Build assets and minify
-        run: npm run build
+        run: |
+          npx postcss theme/assets/css/main.css -o build/assets/css/main.min.css
+          npx terser theme/assets/js/main.js -o build/assets/js/main.min.js -c -m
+          npx html-minifier-terser --input-dir build --output-dir build --collapse-whitespace --remove-comments --minify-css true --minify-js true
+          npx html-validate "build/**/*.html"
 
       # 7. Валидация HTML
       - name: Validate HTML
