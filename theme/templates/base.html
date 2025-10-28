@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ meta.title or "Мой сайт" }}</title>
+  <meta name="description" content="{{ meta.description or "Описание сайта" }}">
+  <meta name="author" content="{{ meta.author or "Автор" }}">
+  <link rel="stylesheet" href="/theme/assets/css/main.css">
+</head>
+<body>
+  {% include "_includes/header.html" %}
+  <main id="content">
+    {{ content | safe }}
+  </main>
+  {% include "_includes/footer.html" %}
+  <script src="/theme/assets/js/main.js"></script>
+</body>
+</html>

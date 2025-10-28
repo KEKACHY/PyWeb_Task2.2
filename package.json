@@ -1,0 +1,34 @@
+{
+  "name": "pyweb_task2.2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "postcss theme/assets/css/main.css -o build/assets/css/main.min.css",
+    "build:js": "terser theme/assets/js/main.js -o build/assets/js/main.min.js -c -m",
+    "minify:html": "html-minifier-terser --input-dir theme/templates --output-dir build --collapse-whitespace --remove-comments --minify-css true --minify-js true",
+    "validate:html": "html-validate build/**/*.html",
+    "build": "npm run build:css && npm run build:js && npm run minify:html && npm run validate:html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KEKACHY/PyWeb_Task2.2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/KEKACHY/PyWeb_Task2.2/issues"
+  },
+  "homepage": "https://github.com/KEKACHY/PyWeb_Task2.2#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.1.1",
+    "html-minifier-terser": "^7.2.0",
+    "html-validate": "^10.2.1",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "terser": "^5.44.0"
+  }
+}
