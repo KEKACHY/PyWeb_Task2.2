@@ -1,56 +1,36 @@
-name: Build and Deploy PyWeb Task2.2
+name: Build and Deploy Site
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
-
-# Важно! Разрешаем Actions писать в Pages
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+      - main  
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt || pip install frontmatter markdown jinja2 smartypants
+      - name: Install dependencies
+        run: npm install
 
-      - name: Install global npm packages
-        run: |
-          npm install -g postcss postcss-cli autoprefixer cssnano terser html-minifier-terser html-validate
+      - name: Build CSS with PostCSS
+        run: npm run build-css  
 
-      - name: Build HTML
-        run: python build.py
-
-      - name: Build assets and minify
-        run: npm run build
+      - name: Build site
+        run: mkdocs build --site-dir dist 
 
       - name: Validate HTML
-        run: npm run validate:html
+        run: npx html-validator dist/**/*.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          publish_dir: ./build      
-          publish_branch: gh-pages  
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
