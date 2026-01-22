@@ -43,7 +43,6 @@ def render_pages():
         return
     for mdfile in files:
         post = frontmatter.load(mdfile)
-        # 🔹 убрана генерация id для заголовков (toc) — чтобы html-validate не ругался
         html_body = markdown.markdown(
             post.content,
             extensions=[
