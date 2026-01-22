@@ -1,5 +1,7 @@
 # PyWeb_Task2.2 — Кастомизация статического сайта
 
+## [Посмотреть сайт](https://kekachy.github.io/PyWeb_Task2.2/)
+
 ## О проекте
 Реализована собственная тема (header, footer, стилизованная главная страница).  
 Сайт генерируется из Markdown файлов (site-src/*.md) в HTML через Jinja2 (скрипт `build.py`), после чего выполняется сборка статики: PostCSS для CSS, terser для JS; HTML минифицируется и валидируется. CI реализован через GitHub Actions; деплой — на GitHub Pages.
