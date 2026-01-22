@@ -20,17 +20,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build CSS with PostCSS
-        run: npm run build-css  
+      - name: Build CSS
+        run: npm run build:css
 
-      - name: Build site
-        run: mkdocs build --site-dir dist 
+      - name: Build JS
+        run: npm run build:js
+
+      - name: Minify HTML
+        run: npm run minify:html
 
       - name: Validate HTML
-        run: npx html-validator dist/**/*.html
+        run: npm run validate:html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./build
