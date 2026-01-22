@@ -3,18 +3,22 @@ name: Build and Deploy PyWeb Task2.2
 on:
   push:
     branches:
-      - main  
+      - main
   workflow_dispatch:
+
+# Важно! Разрешаем Actions писать в Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v3
-
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -47,6 +51,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
+          publish_dir: ./build      
+          publish_branch: gh-pages  
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
-          publish_branch: gh-pages
